@@ -2,14 +2,50 @@
 
 exports[`when applied with invalid options matches snapshot: errors 1`] = `
 Array [
-  "Error: main.0c220ec66316af2c1b24.js from UglifyJs
-DefaultsError: \`invalid-option\` is not a supported option",
-  "Error: manifest.d6857f782c13a99b5917.js from UglifyJs
-DefaultsError: \`invalid-option\` is not a supported option",
+  Array [
+    "Error: main.27965655b499b10158f3.js from UglifyJs",
+    "DefaultsError: \`invalid-option\` is not a supported option",
+    "    at DefaultsError.get (eval at Object.<anonymous> (node_modules/uglify-es/tools/node.js:21:1), <anonymous>:75:23)",
+    "    at UglifyJsPlugin.buildError (src/index.js:71:54)",
+    "    at src/index.js:200:20",
+    "    at Array.forEach (<anonymous>)",
+    "    at src/index.js:192:17",
+    "    at step (src/uglify/index.js:49:9)",
+    "    at done (src/uglify/index.js:57:30)",
+    "    at src/uglify/index.js:62:13",
+    "    at _class.boundWorkers (src/uglify/index.js:35:11)",
+    "    at enqueue (src/uglify/index.js:55:14)",
+    "    at src/uglify/index.js:70:9",
+    "    at Array.forEach (<anonymous>)",
+    "    at _class.runTasks (src/uglify/index.js:53:11)",
+    "    at UglifyJsPlugin.optimizeFn (src/index.js:186:14)",
+    "    at Compilation.applyPluginsAsyncSeries (node_modules/tapable/lib/Tapable.js:206:13)",
+    "    at applyPluginsAsync.err (node_modules/webpack/lib/Compilation.js:663:10)",
+  ],
+  Array [
+    "Error: manifest.d6857f782c13a99b5917.js from UglifyJs",
+    "DefaultsError: \`invalid-option\` is not a supported option",
+    "    at DefaultsError.get (eval at Object.<anonymous> (node_modules/uglify-es/tools/node.js:21:1), <anonymous>:75:23)",
+    "    at UglifyJsPlugin.buildError (src/index.js:71:54)",
+    "    at src/index.js:200:20",
+    "    at Array.forEach (<anonymous>)",
+    "    at src/index.js:192:17",
+    "    at step (src/uglify/index.js:49:9)",
+    "    at done (src/uglify/index.js:57:30)",
+    "    at src/uglify/index.js:62:13",
+    "    at _class.boundWorkers (src/uglify/index.js:35:11)",
+    "    at enqueue (src/uglify/index.js:55:14)",
+    "    at src/uglify/index.js:70:9",
+    "    at Array.forEach (<anonymous>)",
+    "    at _class.runTasks (src/uglify/index.js:53:11)",
+    "    at UglifyJsPlugin.optimizeFn (src/index.js:186:14)",
+    "    at Compilation.applyPluginsAsyncSeries (node_modules/tapable/lib/Tapable.js:206:13)",
+    "    at applyPluginsAsync.err (node_modules/webpack/lib/Compilation.js:663:10)",
+  ],
 ]
 `;
 
-exports[`when applied with invalid options matches snapshot: main.0c220ec66316af2c1b24.js 1`] = `
+exports[`when applied with invalid options matches snapshot: main.27965655b499b10158f3.js 1`] = `
 "webpackJsonp([0],[
 /* 0 */
 /***/ (function(module, exports) {
@@ -18,6 +54,7 @@ exports[`when applied with invalid options matches snapshot: main.0c220ec66316af
 /* @preserve*/
 // bar
 const a = 2 + 2;
+const c = 1 + 1;
 
 module.exports = function Foo() {
   const b = 2 + 2;

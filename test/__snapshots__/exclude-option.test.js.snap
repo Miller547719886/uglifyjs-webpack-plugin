@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when applied with exclude option matches snapshot for a single exclude: entry.a3533847fa24ef98733c.js 1`] = `"webpackJsonp([2],{2:function(o,n){o.exports=function(){console.log(7)}}},[2]);"`;
+exports[`when applied with exclude option matches snapshot for a single exclude: entry.fe8533ecddd54f453ac1.js 1`] = `"webpackJsonp([2],{2:function(o,n){o.exports=function(){console.log(7)}}},[2]);"`;
 
 exports[`when applied with exclude option matches snapshot for a single exclude: errors 1`] = `Array []`;
 
@@ -24,7 +24,7 @@ exports[`when applied with exclude option matches snapshot for a single exclude:
 
 exports[`when applied with exclude option matches snapshot for a single exclude: warnings 1`] = `Array []`;
 
-exports[`when applied with exclude option matches snapshot for multiple excludes: entry.a3533847fa24ef98733c.js 1`] = `"webpackJsonp([2],{2:function(o,n){o.exports=function(){console.log(7)}}},[2]);"`;
+exports[`when applied with exclude option matches snapshot for multiple excludes: entry.fe8533ecddd54f453ac1.js 1`] = `"webpackJsonp([2],{2:function(o,n){o.exports=function(){console.log(7)}}},[2]);"`;
 
 exports[`when applied with exclude option matches snapshot for multiple excludes: errors 1`] = `Array []`;
 

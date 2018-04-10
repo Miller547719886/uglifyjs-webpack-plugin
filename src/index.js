@@ -47,11 +47,18 @@ class UglifyJsPlugin {
         ...uglifyOptions,
       },
     };
+    this.sourceMapsCache = new WeakMap();
   }
 
-  static buildError(err, file, sourceMap, requestShortener) {
+  buildError(err, file, inputSourceMap, requestShortener) {
     // Handling error which should have line, col, filename and message
     if (err.line) {
+      const sourceMapCacheKey = { file };
+      let sourceMap = this.sourceMapsCache.get(sourceMapCacheKey);
+      if (!sourceMap) {
+        sourceMap = new SourceMapConsumer(inputSourceMap);
+        this.sourceMapsCache.set(sourceMapCacheKey, sourceMap);
+      }
       const original = sourceMap && sourceMap.originalPositionFor({
         line: err.line,
         column: err.col,
@@ -66,21 +73,29 @@ class UglifyJsPlugin {
     return new Error(`${file} from UglifyJs\n${err.message}`);
   }
 
-  static buildWarnings(warnings, file, sourceMap, warningsFilter, requestShortener) {
-    if (!sourceMap) {
+  buildWarnings(warnings, file, inputSourceMap, warningsFilter, requestShortener) {
+    if (!inputSourceMap) {
       return warnings;
+    }
+    const sourceMapCacheKey = { file };
+    let sourceMap = this.sourceMapsCache.get(sourceMapCacheKey);
+    if (!sourceMap) {
+      sourceMap = new SourceMapConsumer(inputSourceMap);
+      this.sourceMapsCache.set(sourceMapCacheKey, sourceMap);
     }
     return warnings.reduce((accWarnings, warning) => {
       const match = warningRegex.exec(warning);
       const line = +match[1];
       const column = +match[2];
-      const original = sourceMap.originalPositionFor({
+      const original = sourceMap && sourceMap.originalPositionFor({
         line,
         column,
       });
 
       if (original && original.source && original.source !== file && warningsFilter(original.source)) {
         accWarnings.push(`${warning.replace(warningRegex, '')}[${requestShortener.shorten(original.source)}:${original.line},${original.column}]`);
+      } else {
+        accWarnings.push(`${warning.replace(warningRegex, '')}`);
       }
 
       return accWarnings;
@@ -108,7 +123,7 @@ class UglifyJsPlugin {
         .concat(compilation.additionalChunkAssets || [])
         .filter(ModuleFilenameHelpers.matchObject.bind(null, this.options))
         .forEach((file) => {
-          let sourceMap;
+          let inputSourceMap;
           const asset = compilation.assets[file];
           if (uglifiedAssets.has(asset)) {
             return;
@@ -116,15 +131,12 @@ class UglifyJsPlugin {
 
           try {
             let input;
-            let inputSourceMap;
 
             if (this.options.sourceMap && asset.sourceAndMap) {
               const { source, map } = asset.sourceAndMap();
 
               input = source;
               inputSourceMap = map;
-
-              sourceMap = new SourceMapConsumer(inputSourceMap);
             } else {
               input = asset.source();
               inputSourceMap = null;
@@ -142,7 +154,6 @@ class UglifyJsPlugin {
             const task = {
               file,
               input,
-              sourceMap,
               inputSourceMap,
               commentsFile,
               extractComments: this.options.extractComments,
@@ -162,10 +173,10 @@ class UglifyJsPlugin {
             tasks.push(task);
           } catch (error) {
             compilation.errors.push(
-              UglifyJsPlugin.buildError(
+              this.buildError(
                 error,
                 file,
-                sourceMap,
+                inputSourceMap,
                 requestShortener,
               ),
             );
@@ -179,17 +190,17 @@ class UglifyJsPlugin {
         }
 
         results.forEach((data, index) => {
-          const { file, input, sourceMap, inputSourceMap, commentsFile } = tasks[index];
+          const { file, input, inputSourceMap, commentsFile } = tasks[index];
           const { error, map, code, warnings, extractedComments } = data;
 
           // Handling results
           // Error case: add errors, and go to next file
           if (error) {
             compilation.errors.push(
-              UglifyJsPlugin.buildError(
+              this.buildError(
                 error,
                 file,
-                sourceMap,
+                inputSourceMap,
                 requestShortener,
               ),
             );
@@ -248,10 +259,10 @@ class UglifyJsPlugin {
 
           // Handling warnings
           if (warnings) {
-            const warnArr = UglifyJsPlugin.buildWarnings(
+            const warnArr = this.buildWarnings(
               warnings,
               file,
-              sourceMap,
+              inputSourceMap,
               this.options.warningsFilter,
               requestShortener,
             );

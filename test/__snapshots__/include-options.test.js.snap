@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when applied with include option matches snapshot for a single include: entry.a3533847fa24ef98733c.js 1`] = `
+exports[`when applied with include option matches snapshot for a single include: entry.fe8533ecddd54f453ac1.js 1`] = `
 "webpackJsonp([2],{
 
 /***/ 2:
@@ -10,6 +10,7 @@ exports[`when applied with include option matches snapshot for a single include:
 /* @preserve*/
 // bar
 const a = 2 + 2;
+const c = 1 + 1;
 
 module.exports = function Foo() {
   const b = 2 + 2;
@@ -148,7 +149,7 @@ exports[`when applied with include option matches snapshot for a single include:
 
 exports[`when applied with include option matches snapshot for a single include: warnings 1`] = `Array []`;
 
-exports[`when applied with include option matches snapshot for multiple includes: entry.a3533847fa24ef98733c.js 1`] = `
+exports[`when applied with include option matches snapshot for multiple includes: entry.fe8533ecddd54f453ac1.js 1`] = `
 "webpackJsonp([2],{
 
 /***/ 2:
@@ -158,6 +159,7 @@ exports[`when applied with include option matches snapshot for multiple includes
 /* @preserve*/
 // bar
 const a = 2 + 2;
+const c = 1 + 1;
 
 module.exports = function Foo() {
   const b = 2 + 2;
